@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>LittleMan PC</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <label>Enter Function</label>
+    <div style="float:right" id="results"></div>
+    <input id="funcName" placeholder="Enter a function">
+    <button id="submit">Enter</button>
+    <div id="display"></div>
+    <button id="calculate">Calculate</button>
+    <script type="text/javascript">
+    const x = [{ name: "INP", num: 901 }, { name: "STA", num: 399 }, { name: "ADD", num: 199 }, { name: "OUT", num: 902 }, { name: "HLT", num: 000 }];
+    let holder = [];
+    let inputs = [];
+    $("#submit").on("click", function() {
+        var name = $("#funcName").val().trim().toUpperCase();
+        x.forEach(el => {
+            if (el.name === name) {
+                holder.push({ name: el.name, num: el.num })
+            }
+        });
+        $("#display").html("")
+        holder.forEach(element => {
+            $("#display").append("<div>" + element.name + " " + element.num + "</div>")
+        })
+    })
+    $("#calculate").on("click", function(e) {
+        e.preventDefault();
+        holder.forEach(element => {
+            if (element.startsWith("INP")) {
+                let input = parseInt(prompt("enter an input"), 10);
+                inputs.push(input);
+            }
+
+            if (element.startsWith("ADD")) {
+                const reducer = (accumlator, currentValue) => accumlator + currentValue;
+                $("#results").html("Output: " + inputs.reduce(reducer))
+            }
+        })
+    })
+    </script>
+</body>
+
+</html>
